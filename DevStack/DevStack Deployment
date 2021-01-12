@@ -1,0 +1,20 @@
+1. Add Stack User (optional). DevStack should be run as a non-root user with sudo enabled (standard logins to cloud images such as “ubuntu” or “cloud-user” are usually fine). If you are not using a cloud image, you can create a separate stack user to run DevStack with
+$ sudo useradd -s /bin/bash -d /opt/stack -m stack
+
+2. Since this user will be making many changes to your system, it should have sudo privileges:
+$ echo "stack ALL=(ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/stack
+$ sudo su - stack
+ 
+3. Download DevStack
+$ git clone https://opendev.org/openstack/devstack
+$ cd devstack
+
+4. Create a local.conf file with four passwords preset at the root of the devstack git repo.
+[[local|localrc]]
+ADMIN_PASSWORD=secret
+DATABASE_PASSWORD=$ADMIN_PASSWORD
+RABBIT_PASSWORD=$ADMIN_PASSWORD
+SERVICE_PASSWORD=$ADMIN_PASSWORD
+
+5. Start the install
+$ ./stack.sh
